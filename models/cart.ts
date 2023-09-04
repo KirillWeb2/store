@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+import mongoose from "mongoose";
 
 const {Schema} = mongoose;
 mongoose.Promise = global.Promise;
@@ -6,7 +6,7 @@ mongoose.Promise = global.Promise;
 const CartSchema = new Schema(
     {
         userId: {type: String, required: true},
-        products: [{type: mongoose.Schema.Types.ObjectId, ref: "CartItem"}]
+        items: [{type: mongoose.Schema.Types.ObjectId, ref: "Cartitem"}]
     },
     {timestamps: true}
 );

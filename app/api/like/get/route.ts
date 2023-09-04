@@ -1,22 +1,19 @@
-import {NextResponse} from "next/server";
+import { NextRequest, NextResponse } from 'next/server';
 
-import {connect} from "@/utils/db";
-import {LikeModel} from "@/models/like";
+import { connect } from '@/utils/db';
+import { LikeModel } from '@/models';
 
-
-export const GET = async (req) => {
+export const GET = async (req: NextRequest) => {
     try {
-        await connect()
+        await connect();
 
-        const userId = req.nextUrl.searchParams.get("userId") || "";
+        const userId = req.nextUrl.searchParams.get('userId') || '';
 
-        const like = await LikeModel.findOne({userId: userId})
+        const like = await LikeModel.findOne({ userId: userId }).populate('products');
 
-        await like.populate("products")
-
-        return NextResponse.json({like})
+        return NextResponse.json({ like });
     } catch (e) {
-        console.log(e)
-        return NextResponse.json({msg: "error"})
+        console.log(e);
+        return NextResponse.json({ msg: 'error' });
     }
-}
+};

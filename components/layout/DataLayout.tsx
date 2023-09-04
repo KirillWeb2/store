@@ -1,16 +1,16 @@
-"use client"
+'use client';
 
-import {RootContext} from "@/context/root";
-import {useCart} from "@/hook/useCart";
-import {useLike} from "@/hook/useLike";
+import { RootContext } from '@/context/root';
+import { useCart } from '@/hook/useCart';
+import { useLike } from '@/hook/useLike';
 
 type DataLayoutProps = {
     children: React.ReactNode;
 };
 
-export const DataLayout = ({children}: DataLayoutProps) => {
-    const {cart, createCart, addItem, deleteItem, updateItem} = useCart();
-    const {like, deleteItem: deleteItemInLike, addItem: addItemInLike, createLike} = useLike();
+export const DataLayout = ({ children }: DataLayoutProps) => {
+    const { cart, createCart, addItem, deleteItem, updateItem, setCart } = useCart();
+    const { like, deleteItem: deleteItemInLike, addItem: addItemInLike, createLike } = useLike();
 
     return (
         <RootContext.Provider
@@ -20,11 +20,13 @@ export const DataLayout = ({children}: DataLayoutProps) => {
                 addItemInCart: addItem,
                 deleteItemInCart: deleteItem,
                 updateItemInCart: updateItem,
+                setCart,
                 like,
                 addItemInLike,
                 deleteItemInLike,
-                createLike
-            }}>
+                createLike,
+            }}
+        >
             {children}
         </RootContext.Provider>
     );

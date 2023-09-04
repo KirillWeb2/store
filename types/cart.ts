@@ -4,7 +4,7 @@ import {ProductType} from "./product";
 export type CartType = {
     _id: string;
     userId: string;
-    products: CartItemType[];
+    items: CartItemType[];
 }
 
 export type GetCartBody = {

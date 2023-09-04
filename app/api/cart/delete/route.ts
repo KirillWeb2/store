@@ -1,41 +1,37 @@
-import {NextResponse} from "next/server";
+import { NextRequest, NextResponse } from 'next/server';
 
-import {connect} from "@/utils/db";
-import {CartModel} from "@/models/cart";
-import {CartItemModel} from "@/models/cart-item";
+import { connect } from '@/utils/db';
+import { CartItemModel, CartModel } from '@/models';
+import { CartItemType } from '@/types/cart';
 
-
-export const POST = async (req) => {
+export const POST = async (req: NextRequest) => {
     try {
-        await connect()
+        await connect();
 
-        const {cartId, productId} = await req.json()
+        const { cartId, productId } = await req.json();
 
-        const cart = await CartModel.findOne({_id: cartId})
+        const cart = await CartModel.findOne({ _id: cartId }).populate({
+            path: 'items',
+            populate: { path: 'product' },
+        });
 
-        await cart.populate({path: "products", name: "products"})
+        let filterItems: CartItemType[] = [];
 
-        if (cart?.products.length) {
-            await cart.populate({path: "products.product", name: "product"})
-        }
-
-        let filterProducts = []
-
-        cart.products.forEach(async (el) => {
+        cart.items.forEach(async (el: CartItemType) => {
             if (String(el.product._id) === productId) {
-                await CartItemModel.deleteOne({_id: el._id})
+                await CartItemModel.deleteOne({ _id: el._id });
             } else {
-                filterProducts.push(el)
+                filterItems.push(el);
             }
-        })
+        });
 
-        cart.products = filterProducts
+        cart.items = filterItems;
 
-        await cart.save()
+        await cart.save();
 
-        return NextResponse.json({cart})
+        return NextResponse.json({ cart });
     } catch (e) {
-        console.log(e)
-        return NextResponse.json({msg: "error"})
+        console.log(e);
+        return NextResponse.json({ msg: 'error' });
     }
-}
+};

@@ -1,10 +1,10 @@
-"use client"
+'use client';
 
-import {createContext} from "react";
+import { Dispatch, SetStateAction, createContext } from 'react';
 
-import {AddItemInCartBody, CartType, CreateCartBody, DeleteItemInCartBody, UpdateItemInCartBody} from "../types/cart";
-import {ProductType} from "@/types/product";
-import {AddItemInLikeBody, CreateLikeBody, DeleteItemInLikeBody, LikeType} from "@/types/like";
+import { AddItemInCartBody, CartType, CreateCartBody, DeleteItemInCartBody, UpdateItemInCartBody } from '../types/cart';
+
+import { AddItemInLikeBody, CreateLikeBody, DeleteItemInLikeBody, LikeType } from '@/types/like';
 
 type RootContextType = {
     cart: CartType | null;
@@ -12,6 +12,7 @@ type RootContextType = {
     addItemInCart: (body: AddItemInCartBody) => void;
     deleteItemInCart: (body: DeleteItemInCartBody) => void;
     updateItemInCart: (body: UpdateItemInCartBody) => void;
+    setCart: Dispatch<SetStateAction<CartType | null>>;
     like: LikeType | null;
     createLike: (body: CreateLikeBody) => void;
     addItemInLike: (body: AddItemInLikeBody) => void;
@@ -23,9 +24,10 @@ export const RootContext = createContext<RootContextType>({
     like: null,
     addItemInCart: () => {},
     createCart: () => {},
+    setCart: () => {},
     deleteItemInCart: () => {},
     updateItemInCart: () => {},
     createLike: () => {},
     addItemInLike: () => {},
-    deleteItemInLike: () => {}
+    deleteItemInLike: () => {},
 });

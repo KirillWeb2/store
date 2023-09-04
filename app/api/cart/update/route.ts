@@ -1,29 +1,24 @@
-import {NextResponse} from "next/server";
+import { NextRequest, NextResponse } from 'next/server';
 
-import {connect} from "@/utils/db";
-import {CartModel} from "@/models/cart";
-import {CartItemModel} from "@/models/cart-item";
+import { connect } from '@/utils/db';
+import { CartItemModel, CartModel } from '@/models';
 
-
-export const POST = async (req) => {
+export const POST = async (req: NextRequest) => {
     try {
-        await connect()
+        await connect();
 
-        const {cartId, cartItemId, quantity} = await req.json()
+        const { cartId, cartItemId, quantity } = await req.json();
 
-        await CartItemModel.updateOne({_id: cartItemId}, {$inc: {quantity: quantity}});
+        await CartItemModel.updateOne({ _id: cartItemId }, { $inc: { quantity: quantity } });
 
-        let cart = await CartModel.findOne({_id: cartId})
+        let cart = await CartModel.findOne({ _id: cartId }).populate({
+            path: 'items',
+            populate: { path: 'product' },
+        })
 
-        await cart.populate({path: "products", name: "products"})
-
-        if (cart?.products.length) {
-            await cart.populate({path: "products.product", name: "product"})
-        }
-
-        return NextResponse.json({cart})
+        return NextResponse.json({ cart });
     } catch (e) {
-        console.log(e)
-        return NextResponse.json({msg: "error"})
+        console.log(e);
+        return NextResponse.json({ msg: 'error' });
     }
-}
+};

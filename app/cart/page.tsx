@@ -1,5 +1,6 @@
+import { CartList } from "@/components/cart/cart-list";
 
-import {CartList} from "@/components/cart-list";
+
 
 
 export default async function CartPage() {

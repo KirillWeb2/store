@@ -1,20 +1,19 @@
-import {NextResponse} from "next/server";
+import { NextRequest, NextResponse } from 'next/server';
 
-import {connect} from "@/utils/db";
-import {CartModel} from "@/models/cart";
+import { connect } from '@/utils/db';
+import { CartModel } from '@/models';
 
-
-export const POST = async (req) => {
+export const POST = async (req: NextRequest) => {
     try {
-        await connect()
+        await connect();
 
-        const {userId, products} = await req.json()
+        const { userId, products } = await req.json();
 
-        const cart = await CartModel.create({userId, products})
+        const cart = await CartModel.create({ userId, items: products });
 
-        return NextResponse.json({cart})
+        return NextResponse.json({ cart });
     } catch (e) {
-        console.log(e)
-        return NextResponse.json({msg: "error"})
+        console.log(e);
+        return NextResponse.json({ msg: 'error' });
     }
-}
+};
