@@ -1,11 +1,12 @@
-import { CartList } from "@/components/cart/cart-list";
-
-
-
+import { CartList } from '@/components/cart';
+import { CartLayout, LikeLayout } from '@/components/layout';
 
 export default async function CartPage() {
-
-    return <div>
-        <CartList />
-    </div>
+    return (
+        <CartLayout>
+            <LikeLayout>
+                <CartList />
+            </LikeLayout>
+        </CartLayout>
+    );
 }

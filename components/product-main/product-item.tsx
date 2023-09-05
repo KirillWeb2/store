@@ -4,16 +4,20 @@ import Link from 'next/link';
 import { useCallback, useContext } from 'react';
 import { Heart, ShoppingBasket, Trash2 } from 'lucide-react';
 
-import { Button } from '../ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from '../ui/card';
-import { ProductType } from '@/types/product';
+import { Button } from '../ui/button';
+
 import { truncateText } from '@/utils/truncate-text';
-import { RootContext } from '@/context/root';
 import { formatPrice } from '@/utils/format-price';
+
+import { CartContext, LikeContext } from '@/context';
+
+import { ProductType } from '@/types/product';
 
 type ProductItemProps = { item: ProductType };
 export const ProductItem = ({ item }: ProductItemProps) => {
-    const { cart, deleteItemInCart, addItemInCart, deleteItemInLike, addItemInLike, like } = useContext(RootContext);
+    const { cart, deleteItemInCart, addItemInCart } = useContext(CartContext);
+    const { like, addItemInLike, deleteItemInLike } = useContext(LikeContext);
 
     const handleSetItemInCart = useCallback(async () => {
         if (cart) {

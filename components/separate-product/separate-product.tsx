@@ -1,7 +1,7 @@
-import { ProductSpecifications } from './product-specifications';
 import { Reviews } from './reviews-list';
-import ProductGallery from './product-gallery';
 import { ProductType } from '@/types/product';
+
+import { ProductSpecifications, ProductGallery } from '.';
 
 type SeparateProductProps = {
     product: ProductType;

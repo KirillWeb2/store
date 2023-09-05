@@ -5,44 +5,39 @@ import { useCallback, useContext, useEffect, useState } from 'react';
 
 import { orderService } from '@/service/order-service';
 import { OrderEnum, OrderType, UpdateOrderBody } from '@/types/order';
-import { RootContext } from '@/context/root';
+import { CartContext } from '@/context';
 
 type UseOrderType = {
     isAdmin?: boolean;
 };
-export const useOrder = ({ isAdmin = false }: UseOrderType) => {
+export const useOrder = () => {
     const { isLoaded, session } = useSession();
     const [isLoading, setIsLoading] = useState(false);
-    const { setCart } = useContext(RootContext);
+    const { setCart } = useContext(CartContext);
 
     const [orders, setOrders] = useState<null | OrderType[]>(null);
 
-    const getOrders = useCallback(
-        async (userId?: string) => {
-            setIsLoading(true);
+    const getOrders = useCallback(async (userId?: string) => {
+        setIsLoading(true);
 
-            if (userId && !isAdmin) {
-                const { orders } = await orderService.getAllForUser({ userId });
-                setOrders(orders);
-                return;
-            }
-
-            const { orders } = await orderService.getAll();
+        if (userId) {
+            const { orders } = await orderService.getAllForUser({ userId });
             setOrders(orders);
-            setIsLoading(false);
-        },
-        [isAdmin],
-    );
+            return;
+        }
+
+        const { orders } = await orderService.getAll();
+        setOrders(orders);
+        setIsLoading(false);
+    }, []);
 
     const updateInfo = useCallback(async () => {
         await getOrders();
     }, []);
 
     const updateOrder = useCallback(async (body: UpdateOrderBody) => {
-        if (isAdmin) {
-            const { orders } = await orderService.updateOrder(body);
-            setOrders(orders);
-        }
+        const { orders } = await orderService.updateOrder(body);
+        setOrders(orders);
     }, []);
 
     const createOrder = useCallback(
@@ -55,10 +50,10 @@ export const useOrder = ({ isAdmin = false }: UseOrderType) => {
     );
 
     useEffect(() => {
-        if (isLoaded && session && orders === null && !isLoading) {
+        if (session) {
             getOrders(session.user.id);
         }
-    }, [isLoaded, session, orders, isLoading]);
+    }, [session]);
 
     return { orders, updateOrder, createOrder, updateInfo } as const;
 };

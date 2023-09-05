@@ -4,9 +4,9 @@ import { UserButton } from '@clerk/nextjs';
 import Link from 'next/link';
 import { Bird, Home, ShoppingCart, Heart, BookOpenCheck, Lock } from 'lucide-react';
 
-import { Button } from './ui/button';
-import { ContainerLayout } from './layout/ContainerLayout';
+import { ContainerLayout } from './layout';
 import { ModeToggle } from './mode-toggle';
+import { Button } from './ui/button';
 
 export const Header = () => {
     return (

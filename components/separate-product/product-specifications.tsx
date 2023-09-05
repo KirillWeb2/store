@@ -3,7 +3,7 @@
 import { useCallback, useContext } from 'react';
 import Link from 'next/link';
 
-import { RootContext } from '@/context/root';
+import { CartContext } from '@/context';
 import { ProductType } from '@/types/product';
 import { formatPrice } from '@/utils/format-price';
 import { Button } from '@/components/ui/button';
@@ -11,8 +11,9 @@ import { Button } from '@/components/ui/button';
 type ProductSpecificationsProps = {
     product: ProductType;
 };
+
 export const ProductSpecifications = ({ product }: ProductSpecificationsProps) => {
-    const { cart, addItemInCart } = useContext(RootContext);
+    const { cart, addItemInCart } = useContext(CartContext);
 
     const containedInTheCart = cart?.items.find((el) => el._id === product._id);
 

@@ -1,14 +1,15 @@
 'use client';
 
-import { useOrder } from '@/hook/useOrder';
-import { OrderItem } from './order-item';
+import { useContext } from 'react';
 
-type OrderListtProps = {
-    isAdmin: boolean;
-};
+import { OrderContext } from '@/context';
 
-export const OrderList = ({ isAdmin }: OrderListtProps) => {
-    const { orders } = useOrder({ isAdmin });
+import { OrderItem } from '.';
 
-    return <div>{orders?.map((el) => <OrderItem key={el._id} isAdmin={isAdmin} order={el} />)}</div>;
+type OrderListtProps = {};
+
+export const OrderList = ({}: OrderListtProps) => {
+    const { orders } = useContext(OrderContext);
+
+    return <div>{orders?.map((el) => <OrderItem key={el._id} order={el} />)}</div>;
 };

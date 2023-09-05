@@ -1,5 +1,5 @@
 import { productService } from '@/service/product-service';
-import { ProductItem } from './product-item';
+import { ProductItem } from '.';
 
 type ProductListProps = {};
 export const ProductList = async ({}: ProductListProps) => {

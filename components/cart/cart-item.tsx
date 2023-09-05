@@ -1,21 +1,24 @@
+'use client';
+
 import { Minus, Plus, Trash2 } from 'lucide-react';
 
+import Link from 'next/link';
 import { useCallback, useContext, useState } from 'react';
 
-import { CartItemType } from '@/types/cart';
 import { Button } from '@/components/ui/button';
-import { truncateText } from '@/utils/truncate-text';
-import { RootContext } from '@/context/root';
+import { CartContext } from '@/context';
 import { Card } from '../ui/card';
-import Link from 'next/link';
+
 import { formatPrice } from '@/utils/format-price';
+import { CartItemType } from '@/types/cart';
+import { truncateText } from '@/utils/truncate-text';
 
 type CartItemProps = {
     item: CartItemType;
 };
 export const CartItem = ({ item }: CartItemProps) => {
     const [isLoading, setIsLoading] = useState(false);
-    const { cart, updateItemInCart, deleteItemInCart } = useContext(RootContext);
+    const { cart, updateItemInCart, deleteItemInCart } = useContext(CartContext);
 
     const handleDeleteItemInCart = useCallback(async () => {
         if (cart) {
@@ -58,7 +61,7 @@ export const CartItem = ({ item }: CartItemProps) => {
 
     return (
         <Card className={'flex items-center justify-between py-4 px-6 mb-[20px]'}>
-            <div className='flex gap-8 items-center'>
+            <div className="flex gap-8 items-center">
                 <div className={'w-[100px] h-auto'}>
                     <Link href={`/product/${item.product._id}`}>
                         <img className={'w-[100%] h-[100%] object-cover'} src="/product.png" alt="" />

@@ -7,14 +7,14 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { truncateText } from '@/utils/truncate-text';
 import { Button } from '@/components/ui/button';
 import { ProductType } from '@/types/product';
-import { RootContext } from '@/context/root';
 import { formatPrice } from '@/utils/format-price';
+import { LikeContext } from '@/context';
 
 type LikeItemProps = {
     item: ProductType;
 };
 export const LikeItem = ({ item }: LikeItemProps) => {
-    const { like, deleteItemInLike } = useContext(RootContext);
+    const { like, deleteItemInLike } = useContext(LikeContext);
 
     const handleDeleteItemInLike = useCallback(async () => {
         if (like) {

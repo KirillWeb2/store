@@ -1,12 +1,13 @@
 'use client';
 
 import { useContext } from 'react';
-import { RootContext } from '@/context/root';
-import { LikeItem } from '@/components/like/like-item';
+
+import { LikeContext } from '@/context';
+import { LikeItem } from '.';
 
 type LikeListProps = {};
 export const LikeList = ({}: LikeListProps) => {
-    const { like } = useContext(RootContext);
+    const { like } = useContext(LikeContext);
 
     if (!like || like?.products.length === 0) {
         return (

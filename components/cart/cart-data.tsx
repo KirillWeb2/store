@@ -1,18 +1,20 @@
 'use client';
 
-import { CartType } from '@/types/cart';
-import { Button } from '../ui/button';
+import { useCallback, useContext } from 'react';
+
 import { formatPrice } from '@/utils/format-price';
-import { useOrder } from '@/hook/useOrder';
-import { useCallback } from 'react';
+
 import { OrderEnum } from '@/types/order';
+import { CartType } from '@/types/cart';
+import { OrderContext } from '@/context';
+
+import { Button } from '../ui/button';
 
 type CartDataProps = {
     cart: CartType;
 };
 export const CartData = ({ cart }: CartDataProps) => {
- 
-    const { createOrder } = useOrder({});
+    const { createOrder } = useContext(OrderContext);
 
     const totalPrice = cart.items.reduce((acc, el) => {
         return (acc += el.quantity * el.product.price);
@@ -28,6 +30,7 @@ export const CartData = ({ cart }: CartDataProps) => {
             });
 
             await createOrder({
+                userId: '',
                 items: items,
                 price: totalPrice,
                 status: OrderEnum.CREATE,
