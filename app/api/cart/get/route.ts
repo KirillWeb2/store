@@ -9,7 +9,7 @@ export const GET = async (req: NextRequest) => {
         await connect();
 
         const { userId } = getAuth(req);
-    
+
         if (!userId) {
             return NextResponse.json({ error: 'Unauthorized' });
         }
@@ -25,3 +25,5 @@ export const GET = async (req: NextRequest) => {
         return NextResponse.json({ msg: 'error' });
     }
 };
+
+export const dynamic = 'force-static';

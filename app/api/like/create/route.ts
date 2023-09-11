@@ -11,7 +11,7 @@ export const POST = async (req: NextRequest) => {
         const { products } = await req.json();
 
         const { userId } = getAuth(req);
-    
+
         if (!userId) {
             return NextResponse.json({ error: 'Unauthorized' });
         }
@@ -24,3 +24,5 @@ export const POST = async (req: NextRequest) => {
         return NextResponse.json({ msg: 'error' });
     }
 };
+
+export const dynamic = 'force-static';

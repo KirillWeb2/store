@@ -29,3 +29,5 @@ export const POST = async (req: NextRequest) => {
         return NextResponse.json({ msg: 'error' });
     }
 };
+
+export const dynamic = 'force-static';

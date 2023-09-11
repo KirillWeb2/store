@@ -6,7 +6,7 @@ import { ProductModel } from '@/models';
 export const GET = async () => {
     try {
         await connect();
-      
+
         const products = await ProductModel.find();
 
         return NextResponse.json({ products, max: products.length });
@@ -15,3 +15,5 @@ export const GET = async () => {
         return NextResponse.json({ msg: 'error' });
     }
 };
+
+export const dynamic = 'force-static';

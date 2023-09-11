@@ -14,7 +14,7 @@ export const POST = async (req: NextRequest) => {
         let cart = await CartModel.findOne({ _id: cartId }).populate({
             path: 'items',
             populate: { path: 'product' },
-        })
+        });
 
         return NextResponse.json({ cart });
     } catch (e) {
@@ -22,3 +22,5 @@ export const POST = async (req: NextRequest) => {
         return NextResponse.json({ msg: 'error' });
     }
 };
+
+export const dynamic = 'force-static';
