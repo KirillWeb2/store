@@ -8,7 +8,8 @@ import { OrderContext } from '@/context';
 import { Card } from '../ui/card';
 import { Button } from '../ui/button';
 
-import { OrderSelect, OrderAccordion } from '.';
+import { OrderAccordion } from './order-accordion';
+import { OrderSelect } from './order-select';
 
 type OrderItemProps = {
     order: OrderType;
@@ -34,9 +35,23 @@ export const OrderItem = ({ order }: OrderItemProps) => {
         setIsLoading(false);
     }, []);
 
-    const updateStatusEvent = useCallback((status: OrderEnum) => {
-        setStatus(status);
-    }, []);
+    const renderUpdateStatusSelect = () => {
+        if (!isAdmin) return <span className="font-bold">{order.status}</span>;
+        if (order.status === OrderEnum.DELIVERED) return <span className="font-bold">{order.status}</span>;
+
+        const updateStatusEvent = (status: OrderEnum) => {
+            setStatus(status);
+        };
+
+        return (
+            <OrderSelect
+                handleSaveOrderInfo={handleSaveOrderInfo}
+                isLoading={isLoading}
+                order={order}
+                updateStatusEvent={updateStatusEvent}
+            />
+        );
+    };
 
     return (
         <Card className="p-6">
@@ -44,24 +59,17 @@ export const OrderItem = ({ order }: OrderItemProps) => {
                 <div className="flex flex-col gap-3">
                     <p className="flex items-center gap-3 text-sm font-thin">
                         Status:
-                        {isAdmin ? (
-                            <OrderSelect
-                                handleSaveOrderInfo={handleSaveOrderInfo}
-                                isLoading={isLoading}
-                                order={order}
-                                updateStatusEvent={updateStatusEvent}
-                            />
-                        ) : (
-                            <span className="font-bold">{order.status}</span>
-                        )}
+                        {renderUpdateStatusSelect()}
                     </p>
                     <p className="text-sm font-thin">
                         Price: <span className="font-bold">{formatPrice(order.price)}</span>
                     </p>
                 </div>
-                <Button disabled={isLoading} onClick={handleUpdateInfo} variant={'outline'}>
-                    Update info
-                </Button>
+                {!isAdmin && order.status !== OrderEnum.DELIVERED && (
+                    <Button disabled={isLoading} onClick={handleUpdateInfo} variant={'outline'}>
+                        Update info
+                    </Button>
+                )}
             </div>
             <OrderAccordion order={order} />
         </Card>

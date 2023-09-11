@@ -7,10 +7,6 @@ export type CartType = {
     items: CartItemType[];
 }
 
-export type GetCartBody = {
-    userId: string;
-}
-
 export type GetCartResponse = {
     cart: CartType
 }
@@ -19,11 +15,6 @@ export type CartItemType = {
     _id: string;
     quantity: number;
     product: ProductType;
-}
-
-export type CreateCartBody = {
-    userId: string;
-    products: string[];
 }
 
 export type CreateCartResponse = {
@@ -40,7 +31,7 @@ export type AddItemInCartResponse = {
 }
 
 export type DeleteItemInCartBody = {
-    productId: string;
+    cartItemId: string;
     cartId: string;
 }
 export type DeleteItemInCartResponse = {

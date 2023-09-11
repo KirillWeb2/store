@@ -1,3 +1,4 @@
+import { getAuth } from '@clerk/nextjs/server';
 import { NextRequest, NextResponse } from 'next/server';
 
 import { connect } from '@/utils/db';
@@ -7,14 +8,16 @@ export const GET = async (req: NextRequest) => {
     try {
         await connect();
 
-        const userId = req.nextUrl.searchParams.get('userId') || '';
+        const { userId } = getAuth(req);
+    
+        if (!userId) {
+            return NextResponse.json({ error: 'Unauthorized' });
+        }
 
         const cart = await CartModel.findOne({ userId: userId }).populate({
             path: 'items',
             populate: { path: 'product' },
         });
-
-        // await cart.populate();
 
         return NextResponse.json({ cart });
     } catch (e) {

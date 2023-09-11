@@ -1,6 +1,6 @@
 'use client';
 
-import { UserButton } from '@clerk/nextjs';
+import { UserButton, useSession } from '@clerk/nextjs';
 import Link from 'next/link';
 import { Bird, Home, ShoppingCart, Heart, BookOpenCheck, Lock } from 'lucide-react';
 
@@ -9,6 +9,8 @@ import { ModeToggle } from './mode-toggle';
 import { Button } from './ui/button';
 
 export const Header = () => {
+    const { isLoaded, isSignedIn, session } = useSession();
+
     return (
         <ContainerLayout>
             <div className="flex items-center justify-between py-2 ">
@@ -54,7 +56,7 @@ export const Header = () => {
                 </ul>
                 <div className="flex items-center gap-3">
                     <ModeToggle />
-                    <UserButton />
+                    {isLoaded && !session ? <Button variant={'ghost'}>Sign-in</Button> : <UserButton />}
                 </div>
             </div>
         </ContainerLayout>

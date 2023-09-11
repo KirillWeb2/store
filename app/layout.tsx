@@ -6,6 +6,7 @@ import { Header } from '@/components/header';
 import { ContainerLayout } from '@/components/layout/ContainerLayout';
 
 import '../style/globals.scss';
+import 'toastify-js/src/toastify.css';
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
     return (

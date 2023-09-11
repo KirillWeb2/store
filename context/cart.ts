@@ -2,15 +2,16 @@
 
 import { Dispatch, SetStateAction, createContext } from 'react';
 
-import { AddItemInCartBody, CartType, CreateCartBody, DeleteItemInCartBody, UpdateItemInCartBody } from '../types/cart';
+import { AddItemInCartBody, CartType, DeleteItemInCartBody, UpdateItemInCartBody } from '../types/cart';
 
 type CartContextType = {
     cart: CartType | null;
-    createCart: (body: CreateCartBody) => void;
+    createCart: () => void;
     addItemInCart: (body: AddItemInCartBody) => void;
     deleteItemInCart: (body: DeleteItemInCartBody) => void;
     updateItemInCart: (body: UpdateItemInCartBody) => void;
     setCart: Dispatch<SetStateAction<CartType | null>>;
+    isLoadingCart: boolean;
 };
 
 export const CartContext = createContext<CartContextType>({
@@ -20,4 +21,5 @@ export const CartContext = createContext<CartContextType>({
     setCart: () => {},
     deleteItemInCart: () => {},
     updateItemInCart: () => {},
+    isLoadingCart: true,
 });

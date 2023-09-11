@@ -5,10 +5,11 @@ import { Heart } from 'lucide-react';
 
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { truncateText } from '@/utils/truncate-text';
-import { Button } from '@/components/ui/button';
 import { ProductType } from '@/types/product';
 import { formatPrice } from '@/utils/format-price';
 import { LikeContext } from '@/context';
+import { ButtonLoading } from '../ui/button-loading';
+import Link from 'next/link';
 
 type LikeItemProps = {
     item: ProductType;
@@ -26,18 +27,22 @@ export const LikeItem = ({ item }: LikeItemProps) => {
         <Card className="max-w-[350px] min-w-[200px]">
             <CardHeader>
                 <div className="h-[210px]">
-                    <img className="object-cover h-[100%] w-[100%]" src={`/product.png`} alt="" />
+                    <Link href={`/product/${item._id}`}>
+                        <img className="object-cover h-[100%] w-[100%]" src={`/product.png`} alt="" />
+                    </Link>
                 </div>
             </CardHeader>
             <CardContent>
-                <CardTitle>{truncateText(item.text, 30)}</CardTitle>
+                <Link href={`/product/${item._id}`}>
+                    <CardTitle>{truncateText(item.text, 30)}</CardTitle>
+                </Link>
                 <CardDescription className={'mt-4'}>{truncateText(item.text, 30)}</CardDescription>
                 <CardDescription className={'mt-2'}>Price: {formatPrice(item.price)}</CardDescription>
             </CardContent>
             <CardFooter className="flex items-center justify-between">
-                <Button onClick={handleDeleteItemInLike} variant={'outline'}>
+                <ButtonLoading onClick={handleDeleteItemInLike} variant={'outline'}>
                     <Heart color={'red'} fill={'red'} strokeWidth={1} absoluteStrokeWidth />
-                </Button>
+                </ButtonLoading>
             </CardFooter>
         </Card>
     );

@@ -1,6 +1,6 @@
 import { OrderType } from '@/types/order';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '../ui/accordion';
-import { AccordionOrderItem } from '.';
+import { AccordionOrderItem } from './accordion-item';
 
 type OrderAccordionType = {
     order: OrderType;

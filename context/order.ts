@@ -2,7 +2,7 @@
 
 import { createContext } from 'react';
 
-import { CreateOrderBody, OrderType, UpdateOrderBody } from '@/types/order';
+import { CreateOrderBody, OrderFilterEnum, OrderType, UpdateOrderBody } from '@/types/order';
 
 type OrderContextType = {
     orders: OrderType[] | null;
@@ -10,6 +10,9 @@ type OrderContextType = {
     updateOrder: (body: UpdateOrderBody) => void;
     createOrder: (body: CreateOrderBody) => void;
     updateInfo: () => void;
+    isLoadingOrder: boolean;
+    updateStatusFilter: (status: OrderFilterEnum) => void;
+    statusFilter: OrderFilterEnum
 };
 
 export const OrderContext = createContext<OrderContextType>({
@@ -18,4 +21,7 @@ export const OrderContext = createContext<OrderContextType>({
     updateOrder: () => {},
     createOrder: () => {},
     updateInfo: () => {},
+    isLoadingOrder: true,
+    updateStatusFilter: () => {},
+    statusFilter: OrderFilterEnum.CREATE
 });

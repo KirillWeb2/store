@@ -9,6 +9,7 @@ type LikeContextType = {
     createLike: (body: CreateLikeBody) => void;
     addItemInLike: (body: AddItemInLikeBody) => void;
     deleteItemInLike: (body: DeleteItemInLikeBody) => void;
+    isLoadingLike: boolean;
 };
 
 export const LikeContext = createContext<LikeContextType>({
@@ -16,4 +17,5 @@ export const LikeContext = createContext<LikeContextType>({
     createLike: () => {},
     addItemInLike: () => {},
     deleteItemInLike: () => {},
+    isLoadingLike: true
 });

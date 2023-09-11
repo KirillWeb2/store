@@ -1,16 +1,18 @@
 'use client';
 
-import { Minus, Plus, Trash2 } from 'lucide-react';
-
 import Link from 'next/link';
+import { Minus, Plus, Trash2 } from 'lucide-react';
 import { useCallback, useContext, useState } from 'react';
 
-import { Button } from '@/components/ui/button';
 import { CartContext } from '@/context';
+
+import { Button } from '@/components/ui/button';
+
 import { Card } from '../ui/card';
 
-import { formatPrice } from '@/utils/format-price';
 import { CartItemType } from '@/types/cart';
+
+import { formatPrice } from '@/utils/format-price';
 import { truncateText } from '@/utils/truncate-text';
 
 type CartItemProps = {
@@ -25,7 +27,7 @@ export const CartItem = ({ item }: CartItemProps) => {
             setIsLoading(true);
             await deleteItemInCart({
                 cartId: cart._id,
-                productId: item.product._id,
+                cartItemId: item._id,
             });
             setIsLoading(false);
         }

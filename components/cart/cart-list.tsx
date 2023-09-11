@@ -2,14 +2,21 @@
 
 import { useContext } from 'react';
 
+import { CartData } from './cart-data';
+import { CartItem } from './cart-item';
 import { CartContext } from '@/context';
-import { CartItem, CartData } from '.';
+import { Loading } from '../loading';
+import { Nothing } from '../nothing';
 
 export const CartList = () => {
-    const { cart } = useContext(CartContext);
+    const { cart, isLoadingCart } = useContext(CartContext);
 
-    if (!cart || (cart && cart.items.length === 0)) {
-        return <p>Корзина пуста</p>;
+    if (isLoadingCart || cart === null) {
+        return <Loading />;
+    }
+
+    if (cart && cart.items.length === 0) {
+        return <Nothing />
     }
 
     return (

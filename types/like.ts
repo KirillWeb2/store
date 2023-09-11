@@ -6,16 +6,11 @@ export type LikeType = {
     products: ProductType[];
 }
 
-export type GetLikeBody = {
-    userId: string;
-}
-
 export type GetLikeResponse = {
     like: LikeType;
 }
 
 export type CreateLikeBody = {
-    userId: string;
     products: string[];
 }
 

@@ -1,35 +1,35 @@
 'use client';
 
-import { useSession } from '@clerk/nextjs';
 import { useCallback, useContext, useEffect, useState } from 'react';
 
+import { OrderEnum, OrderFilterEnum, OrderType, UpdateOrderBody } from '@/types/order';
+
 import { orderService } from '@/service/order-service';
-import { OrderEnum, OrderType, UpdateOrderBody } from '@/types/order';
+
 import { CartContext } from '@/context';
 
-type UseOrderType = {
-    isAdmin?: boolean;
-};
-export const useOrder = () => {
-    const { isLoaded, session } = useSession();
-    const [isLoading, setIsLoading] = useState(false);
+export const useOrder = ({ isAdmin }: { isAdmin: boolean }) => {
+    const [isLoadingOrder, setIsLoadingOrder] = useState(true);
+    const [statusFilter, setStatusFilter] = useState(OrderFilterEnum.ALL);
+
     const { setCart } = useContext(CartContext);
 
     const [orders, setOrders] = useState<null | OrderType[]>(null);
 
-    const getOrders = useCallback(async (userId?: string) => {
-        setIsLoading(true);
+    const getOrders = useCallback(async () => {
+        setIsLoadingOrder(true);
 
-        if (userId) {
-            const { orders } = await orderService.getAllForUser({ userId });
+        if (isAdmin) {
+            const { orders } = await orderService.getAll({ statusFilter });
             setOrders(orders);
+            setIsLoadingOrder(false);
             return;
         }
 
-        const { orders } = await orderService.getAll();
+        const { orders } = await orderService.getAllForUser({ statusFilter });
         setOrders(orders);
-        setIsLoading(false);
-    }, []);
+        setIsLoadingOrder(false);
+    }, [statusFilter]);
 
     const updateInfo = useCallback(async () => {
         await getOrders();
@@ -42,18 +42,26 @@ export const useOrder = () => {
 
     const createOrder = useCallback(
         async (body: { items: { itemId: string; quantity: number }[]; status: OrderEnum; price: number }) => {
-            const { cart, orders } = await orderService.createOrder({ ...body, userId: session?.user.id! });
+            const { cart, orders } = await orderService.createOrder({ ...body });
             setCart(cart);
             setOrders(orders);
         },
-        [session],
+        [],
     );
 
-    useEffect(() => {
-        if (session) {
-            getOrders(session.user.id);
-        }
-    }, [session]);
+    const updateStatusFilter = useCallback((status: OrderFilterEnum) => {
+        setStatusFilter(status);
+    }, []);
 
-    return { orders, updateOrder, createOrder, updateInfo } as const;
+    useEffect(() => {
+        getOrders();
+    }, [statusFilter]);
+
+    useEffect(() => {
+        if (!orders) {
+            getOrders();
+        }
+    }, [orders]);
+
+    return { orders, updateOrder, createOrder, updateInfo, isLoadingOrder, updateStatusFilter, statusFilter } as const;
 };

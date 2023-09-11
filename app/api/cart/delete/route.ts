@@ -8,26 +8,25 @@ export const POST = async (req: NextRequest) => {
     try {
         await connect();
 
-        const { cartId, productId } = await req.json();
+        const { cartId, cartItemId } = await req.json();
 
         const cart = await CartModel.findOne({ _id: cartId }).populate({
             path: 'items',
             populate: { path: 'product' },
         });
 
-        let filterItems: CartItemType[] = [];
+        cart.items = cart.items
+            .filter((el: CartItemType) => String(el._id) !== cartItemId)
+            .map((el: CartItemType) => el._id);
 
-        cart.items.forEach(async (el: CartItemType) => {
-            if (String(el.product._id) === productId) {
-                await CartItemModel.deleteOne({ _id: el._id });
-            } else {
-                filterItems.push(el);
-            }
-        });
-
-        cart.items = filterItems;
+        await CartItemModel.deleteOne({ _id: cartItemId });
 
         await cart.save();
+
+        await cart.populate({
+            path: 'items',
+            populate: { path: 'product' },
+        });
 
         return NextResponse.json({ cart });
     } catch (e) {

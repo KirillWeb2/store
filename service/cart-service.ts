@@ -4,20 +4,18 @@ import {request} from "@/lib/axios";
 import {
     AddItemInCartBody,
     AddItemInCartResponse,
-    CreateCartBody,
     CreateCartResponse, DeleteItemInCartBody, DeleteItemInCartResponse,
-    GetCartBody,
     GetCartResponse, UpdateItemInCartBody, UpdateItemInCartResponse
 } from "@/types/cart";
 
 
 export const cartService = {
-    getCart: async ({userId}: GetCartBody) => {
-        return request.get<void, AxiosResponse<GetCartResponse>>("/cart/get", {params: {userId}})
+    getCart: async () => {
+        return request.get<void, AxiosResponse<GetCartResponse>>("/cart/get")
             .then(res => res.data);
     },
-    createCart: async (data: CreateCartBody) => {
-        return request.post<CreateCartBody, AxiosResponse<CreateCartResponse>>("/cart/create", data)
+    createCart: async () => {
+        return request.post<void, AxiosResponse<CreateCartResponse>>("/cart/create")
             .then(res => res.data);
     },
     addItemInCart: async (data: AddItemInCartBody) => {

@@ -4,19 +4,21 @@ import { request } from '@/lib/axios';
 import {
     CreateOrderBody,
     CreateOrderResponse,
+    GetAllOrdersParams,
     GetAllOrdersResponse,
-    GetOrdersForUserBody,
     UpdateOrderBody,
     UpdateOrderResponse,
 } from '@/types/order';
 
 export const orderService = {
-    getAll: async () => {
-        return request.get<void, AxiosResponse<GetAllOrdersResponse>>('/order/get-all').then((res) => res.data);
-    },
-    getAllForUser: async (params: GetOrdersForUserBody) => {
+    getAll: async ({ statusFilter }: GetAllOrdersParams) => {
         return request
-            .get<void, AxiosResponse<GetAllOrdersResponse>>(`/order/${params.userId}/get`)
+            .get<void, AxiosResponse<GetAllOrdersResponse>>('/order/get-for-admin', { params: { statusFilter } })
+            .then((res) => res.data);
+    },
+    getAllForUser: async ({ statusFilter }: GetAllOrdersParams) => {
+        return request
+            .get<void, AxiosResponse<GetAllOrdersResponse>>(`/order/get-for-user`, { params: { statusFilter } })
             .then((res) => res.data);
     },
     updateOrder: async (body: UpdateOrderBody) => {

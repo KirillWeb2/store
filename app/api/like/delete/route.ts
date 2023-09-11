@@ -10,11 +10,15 @@ export const POST = async (req: NextRequest) => {
 
         const { likeId, productId } = await req.json();
 
-        const like = await LikeModel.findOne({ _id: likeId }).populate('products');
+        const like = await LikeModel.findOne({ _id: likeId });
 
-        like.products = like.products.filter((el: ProductType) => String(el._id) !== productId);
+        like.products = like.products.filter((el: ProductType) => String(el) !== productId);
 
         await like.save();
+
+        if (like.products.length) {
+            await like.populate('products');
+        }
 
         return NextResponse.json({ like });
     } catch (e) {

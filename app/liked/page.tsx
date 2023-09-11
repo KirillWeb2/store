@@ -1,12 +1,10 @@
-import { CartLayout, LikeLayout } from '@/components/layout';
-import { LikeList } from '@/components/like';
+import { LikeLayout } from '@/components/layout';
+import { LikeList } from '@/components/like/like-list';
 
 export default async function LikePage() {
     return (
-        <CartLayout>
-            <LikeLayout>
-                <LikeList />
-            </LikeLayout>
-        </CartLayout>
+        <LikeLayout>
+            <LikeList />
+        </LikeLayout>
     );
 }

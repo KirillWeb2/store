@@ -24,7 +24,7 @@ export const OrderSelect = ({ updateStatusEvent, order, handleSaveOrderInfo, isL
                     </SelectGroup>
                 </SelectContent>
             </Select>
-            <Button disabled={status === order.status || isLoading} onClick={handleSaveOrderInfo} variant={'outline'}>
+            <Button disabled={isLoading} onClick={handleSaveOrderInfo} variant={'outline'}>
                 Save
             </Button>
         </div>

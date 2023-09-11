@@ -8,7 +8,6 @@ module.exports = {
   extends: [
     'plugin:react-hooks/recommended',
     'plugin:jsx-a11y/recommended',
-    'plugin:react-perf/recommended',
     'prettier',
     'airbnb-typescript',
     'plugin:@typescript-eslint/recommended',

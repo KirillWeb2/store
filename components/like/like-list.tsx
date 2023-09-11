@@ -3,18 +3,20 @@
 import { useContext } from 'react';
 
 import { LikeContext } from '@/context';
-import { LikeItem } from '.';
+import { LikeItem } from './like-item';
+import { Loading } from '../loading';
+import { Nothing } from '../nothing';
 
 type LikeListProps = {};
 export const LikeList = ({}: LikeListProps) => {
-    const { like } = useContext(LikeContext);
+    const { like, isLoadingLike } = useContext(LikeContext);
 
-    if (!like || like?.products.length === 0) {
-        return (
-            <div>
-                <p>Любимых нет</p>
-            </div>
-        );
+    if (!like || isLoadingLike) {
+        return <Loading />;
+    }
+
+    if (like?.products.length === 0) {
+        return <Nothing />
     }
 
     return (

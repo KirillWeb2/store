@@ -1,36 +1,32 @@
 'use client';
 
 import { useCallback, useEffect, useState } from 'react';
-import { useSession } from '@clerk/nextjs';
 
 import { cartService } from '@/service/cart-service';
-import { AddItemInCartBody, CartType, CreateCartBody, DeleteItemInCartBody, UpdateItemInCartBody } from '@/types/cart';
+import { AddItemInCartBody, CartType, DeleteItemInCartBody, UpdateItemInCartBody } from '@/types/cart';
 
 export const useCart = () => {
-    const { isLoaded, session } = useSession();
-
+    const [isLoadingCart, setIsLoadingCart] = useState(true);
     const [cart, setCart] = useState<CartType | null>(null);
 
-    const getCart = useCallback(
-        async (userId: string) => {
-            const { cart } = await cartService.getCart({ userId });
-          
-            if (cart) {
-                setCart(cart);
-            } else {
-                await createCart({ userId: userId, products: [] });
-            }
-        },
-        [setCart],
-    );
+    const getCart = useCallback(async () => {
+        setIsLoadingCart(true);
 
-    const createCart = useCallback(
-        async (body: CreateCartBody) => {
-            const { cart } = await cartService.createCart(body);
+        const { cart } = await cartService.getCart();
+
+        if (cart) {
             setCart(cart);
-        },
-        [setCart],
-    );
+            setIsLoadingCart(false);
+        } else {
+            await createCart();
+            setIsLoadingCart(false);
+        }
+    }, [setCart]);
+
+    const createCart = useCallback(async () => {
+        const { cart } = await cartService.createCart();
+        setCart(cart);
+    }, [setCart]);
 
     const deleteItem = useCallback(
         async (body: DeleteItemInCartBody) => {
@@ -57,10 +53,10 @@ export const useCart = () => {
     );
 
     useEffect(() => {
-        if (isLoaded && session && cart === null) {
-            getCart(session.user.id);
+        if (cart === null) {
+            getCart();
         }
-    }, [isLoaded, session, cart]);
+    }, [cart]);
 
     return {
         cart,
@@ -69,5 +65,6 @@ export const useCart = () => {
         setCart,
         deleteItem,
         updateItem,
+        isLoadingCart,
     };
 };

@@ -1,4 +1,4 @@
-import { CartItemType, CartType } from './cart';
+import { CartType } from './cart';
 import { ProductType } from './product';
 
 export enum OrderEnum {
@@ -8,8 +8,16 @@ export enum OrderEnum {
     'DELIVERED' = 'DELIVERED',
 }
 
+export enum OrderFilterEnum {
+    'CREATE' = 'CREATE',
+    'FORMED_SENDING' = 'FORMED_SENDING',
+    'SHIPPED' = 'SHIPPED',
+    'DELIVERED' = 'DELIVERED',
+    'ALL' = 'ALL',
+}
+
 export type OrderType = {
-    _id: string
+    _id: string;
     userId: string;
     items: OrderItemType[];
     price: number;
@@ -21,12 +29,12 @@ export type OrderItemType = {
     product: ProductType;
 };
 
-export type GetAllOrdersResponse = {
-    orders: OrderType[];
+export type GetAllOrdersParams = {
+    statusFilter: OrderFilterEnum;
 };
 
-export type GetOrdersForUserBody = {
-    userId: string;
+export type GetAllOrdersResponse = {
+    orders: OrderType[];
 };
 
 export type GetOdersForUserResponse = {
@@ -43,7 +51,6 @@ export type UpdateOrderResponse = {
 };
 
 export type CreateOrderBody = {
-    userId: string;
     items: {
         itemId: string;
         quantity: number;

@@ -8,7 +8,7 @@ type LikeLayoutProps = {
 };
 
 export const LikeLayout = ({ children }: LikeLayoutProps) => {
-    const { like, deleteItem: deleteItemInLike, addItem: addItemInLike, createLike } = useLike();
+    const { like, deleteItem: deleteItemInLike, addItem: addItemInLike, createLike, isLoadingLike } = useLike();
 
     return (
         <LikeContext.Provider
@@ -17,6 +17,7 @@ export const LikeLayout = ({ children }: LikeLayoutProps) => {
                 addItemInLike,
                 deleteItemInLike,
                 createLike,
+                isLoadingLike
             }}
         >
             {children}

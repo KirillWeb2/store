@@ -9,7 +9,7 @@ type OrderLayoutProps = {
 };
 
 export const OrderLayout = ({ children, isAdmin }: OrderLayoutProps) => {
-    const { createOrder, orders, updateInfo, updateOrder } = useOrder();
+    const { createOrder, orders, updateInfo, updateOrder, isLoadingOrder, updateStatusFilter, statusFilter } = useOrder({isAdmin});
 
     return (
         <OrderContext.Provider
@@ -18,7 +18,10 @@ export const OrderLayout = ({ children, isAdmin }: OrderLayoutProps) => {
                 orders,
                 updateInfo,
                 updateOrder,
-                isAdmin
+                isAdmin,
+                isLoadingOrder,
+                updateStatusFilter,
+                statusFilter
             }}
         >
             {children}

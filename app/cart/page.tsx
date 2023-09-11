@@ -1,12 +1,15 @@
 import { CartList } from '@/components/cart';
-import { CartLayout, LikeLayout } from '@/components/layout';
+import { CartLayout, OrderLayout } from '@/components/layout';
+import { cartService } from '@/service/cart-service';
 
 export default async function CartPage() {
+    const { cart } = await cartService.getCart();
+    
     return (
-        <CartLayout>
-            <LikeLayout>
+        <CartLayout cart={cart}>
+            <OrderLayout isAdmin={false}>
                 <CartList />
-            </LikeLayout>
+            </OrderLayout>
         </CartLayout>
     );
 }

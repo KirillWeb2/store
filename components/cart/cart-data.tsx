@@ -1,6 +1,7 @@
 'use client';
 
 import { useCallback, useContext } from 'react';
+import { useRouter } from 'next/navigation';
 
 import { formatPrice } from '@/utils/format-price';
 
@@ -8,13 +9,14 @@ import { OrderEnum } from '@/types/order';
 import { CartType } from '@/types/cart';
 import { OrderContext } from '@/context';
 
-import { Button } from '../ui/button';
+import { ButtonLoading } from '../ui/button-loading';
 
 type CartDataProps = {
     cart: CartType;
 };
 export const CartData = ({ cart }: CartDataProps) => {
     const { createOrder } = useContext(OrderContext);
+    const router = useRouter();
 
     const totalPrice = cart.items.reduce((acc, el) => {
         return (acc += el.quantity * el.product.price);
@@ -30,24 +32,25 @@ export const CartData = ({ cart }: CartDataProps) => {
             });
 
             await createOrder({
-                userId: '',
                 items: items,
                 price: totalPrice,
                 status: OrderEnum.CREATE,
             });
+
+            await router.push('/orders');
         } catch (error) {
             console.log(error);
         }
-    }, [createOrder]);
+    }, [createOrder, cart]);
 
     return (
         <div className={'flex items-center justify-center gap-10 fixed bottom-0 right-0 w-[100%] h-[100px]'}>
             <p>
                 Общая стоимость: <span>{formatPrice(totalPrice)}</span>
             </p>
-            <Button onClick={handleFormOrder} variant={'secondary'}>
+            <ButtonLoading onClick={handleFormOrder} variant={'secondary'}>
                 Form an order
-            </Button>
+            </ButtonLoading>
         </div>
     );
 };

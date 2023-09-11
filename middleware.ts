@@ -1,9 +1,14 @@
-import { authMiddleware } from "@clerk/nextjs";
- 
+import { authMiddleware } from '@clerk/nextjs';
+
 export default authMiddleware({
-  ignoredRoutes: ["/((?!api|trpc))(_next|.+\..+)(.*)","/api/products/get-all", "/api/products/get-one"]
+    publicRoutes: [
+        '/api/(.*)',
+    ],
+    debug: true,
+    jwksCacheTtlInMs: 60 * 60 * 1000,
+    clockSkewInMs: 5 * 60 * 1000,
 });
- 
+
 export const config = {
-  matcher: ["/((?!.*\\..*|_next).*)", "/", "/(api|trpc)(.*)"],
+    matcher: ['/((?!.*\\..*|_next).*)', '/', '/(api|trpc)(.*)'],
 };

@@ -1,8 +1,7 @@
 import { productService } from '@/service/product-service';
-import { ProductItem } from '.';
+import { ProductItem } from './product-item';
 
-type ProductListProps = {};
-export const ProductList = async ({}: ProductListProps) => {
+export const ProductList = async () => {
     const { products } = await productService.getAll();
 
     return (

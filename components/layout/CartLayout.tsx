@@ -9,7 +9,7 @@ type CartLayoutProps = {
 };
 
 export const CartLayout = ({ children }: CartLayoutProps) => {
-    const { addItem, cart, createCart, deleteItem, setCart, updateItem } = useCart();
+    const { addItem, createCart, deleteItem, setCart, updateItem, isLoadingCart, cart } = useCart();
 
     return (
         <CartContext.Provider
@@ -20,6 +20,7 @@ export const CartLayout = ({ children }: CartLayoutProps) => {
                 deleteItemInCart: deleteItem,
                 setCart,
                 updateItemInCart: updateItem,
+                isLoadingCart,
             }}
         >
             {children}
