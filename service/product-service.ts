@@ -9,9 +9,7 @@ export const productService = {
     },
     getOne: async (params: GetOneProductBody) => {
         return request
-            .get<void, AxiosResponse<GetOneProductResponse>>('/data/get-one', {
-                params: { productId: params.productId },
-            })
+            .post<void, AxiosResponse<GetOneProductResponse>>('/data/get-one', { productId: params.productId })
             .then((res) => res.data);
     },
 };

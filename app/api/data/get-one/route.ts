@@ -3,11 +3,11 @@ import { NextRequest, NextResponse } from 'next/server';
 import { connect } from '@/utils/db';
 import { ProductModel } from '@/models';
 
-export const GET = async (req: NextRequest) => {
+export const POST = async (req: NextRequest) => {
     try {
         await connect();
 
-        const productId = req.nextUrl.searchParams.get('productId');
+        const { productId } = await req.json();
 
         const product = await ProductModel.findById(productId);
 
@@ -17,4 +17,3 @@ export const GET = async (req: NextRequest) => {
         return NextResponse.json({ msg: 'error' });
     }
 };
-
