@@ -25,5 +25,3 @@ export const GET = async (req: NextRequest) => {
         return NextResponse.json({ msg: 'error' });
     }
 };
-
-export const dynamic = 'force-static';
