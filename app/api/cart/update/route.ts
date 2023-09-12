@@ -23,4 +23,3 @@ export const POST = async (req: NextRequest) => {
     }
 };
 
-export const dynamic = 'force-static';
