@@ -3,12 +3,12 @@ import { connect } from '@/utils/db';
 import { getAuth } from '@clerk/nextjs/server';
 import { NextRequest, NextResponse } from 'next/server';
 
-export const GET = async (req: NextRequest) => {
+export const POST = async (req: NextRequest) => {
     try {
         await connect();
 
         const { userId } = getAuth(req);
-        const statusFilter = req.nextUrl.searchParams.get('statusFilter');
+        const { statusFilter } = await req.json();
 
         if (!userId) {
             return NextResponse.json({ error: 'Unauthorized' });
@@ -33,5 +33,3 @@ export const GET = async (req: NextRequest) => {
         return NextResponse.json({ msg: 'error' });
     }
 };
-
-export const dynamic = 'force-static';

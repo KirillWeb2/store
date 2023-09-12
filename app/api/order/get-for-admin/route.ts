@@ -3,11 +3,21 @@ import { NextRequest, NextResponse } from 'next/server';
 import { connect } from '@/utils/db';
 import { OrderModel } from '@/models';
 
-export const GET = async (req: NextRequest) => {
+export const POST = async (req: NextRequest) => {
     try {
         await connect();
 
-        const orders = await OrderModel.find().populate({
+        const { statusFilter } = await req.json();
+
+        const filterQuery = () => {
+            if (statusFilter === 'ALL') {
+                return {};
+            }
+
+            return { status: statusFilter };
+        };
+
+        const orders = await OrderModel.find(filterQuery()).populate({
             path: 'items',
             populate: { path: 'product' },
         });
@@ -18,5 +28,3 @@ export const GET = async (req: NextRequest) => {
         return NextResponse.json({ msg: 'error' });
     }
 };
-
-export const dynamic = 'force-static';

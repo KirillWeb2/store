@@ -14,8 +14,7 @@ import {
 
 export const cartService = {
     getCart: async () => {
-        console.log(process.env.SERVER_URL);
-        return request.get<void, AxiosResponse<GetCartResponse>>('/cart/get').then((res) => res.data);
+        return request.post<void, AxiosResponse<GetCartResponse>>('/cart/get').then((res) => res.data);
     },
     createCart: async () => {
         return request.post<void, AxiosResponse<CreateCartResponse>>('/cart/create').then((res) => res.data);

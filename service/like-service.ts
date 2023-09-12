@@ -14,7 +14,7 @@ import {
 
 export const likeService = {
     getLike: async () => {
-        return request.get<void, AxiosResponse<GetLikeResponse>>('/like/get').then((res) => res.data);
+        return request.post<void, AxiosResponse<GetLikeResponse>>('/like/get').then((res) => res.data);
     },
     createLike: async ({ products }: CreateLikeBody) => {
         return request

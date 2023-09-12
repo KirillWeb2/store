@@ -11,14 +11,14 @@ import {
 } from '@/types/order';
 
 export const orderService = {
-    getAll: async ({ statusFilter }: GetAllOrdersParams) => {
+    getAll: async (body: GetAllOrdersParams) => {
         return request
-            .get<void, AxiosResponse<GetAllOrdersResponse>>('/order/get-for-admin', { params: { statusFilter } })
+            .post<void, AxiosResponse<GetAllOrdersResponse>>('/order/get-for-admin', body)
             .then((res) => res.data);
     },
-    getAllForUser: async ({ statusFilter }: GetAllOrdersParams) => {
+    getAllForUser: async (body: GetAllOrdersParams) => {
         return request
-            .get<void, AxiosResponse<GetAllOrdersResponse>>(`/order/get-for-user`, { params: { statusFilter } })
+            .post<void, AxiosResponse<GetAllOrdersResponse>>(`/order/get-for-user`, body)
             .then((res) => res.data);
     },
     updateOrder: async (body: UpdateOrderBody) => {

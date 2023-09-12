@@ -4,7 +4,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { connect } from '@/utils/db';
 import { CartModel } from '@/models';
 
-export const GET = async (req: NextRequest) => {
+export const POST = async (req: NextRequest) => {
     try {
         await connect();
 
@@ -25,5 +25,3 @@ export const GET = async (req: NextRequest) => {
         return NextResponse.json({ msg: 'error' });
     }
 };
-
-export const dynamic = 'force-static';
