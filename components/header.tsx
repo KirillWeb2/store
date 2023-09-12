@@ -19,13 +19,6 @@ export const Header = () => {
                 </Link>
                 <ul className="flex items-center gap-6">
                     <li>
-                        <Link href={'/'}>
-                            <Button className="flex items-center gap-2" variant={'ghost'}>
-                                Home <Home width={16} height={16} />
-                            </Button>
-                        </Link>
-                    </li>
-                    <li>
                         <Link href={'/cart'}>
                             <Button className="flex items-center gap-2" variant={'ghost'}>
                                 Cart <ShoppingCart width={16} height={16} />{' '}
