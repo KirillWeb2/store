@@ -56,7 +56,13 @@ export const Header = () => {
                 </ul>
                 <div className="flex items-center gap-3">
                     <ModeToggle />
-                    {isLoaded && !session ? <Button variant={'ghost'}>Sign-in</Button> : <UserButton />}
+                    {isLoaded && !session ? (
+                        <Link href="/sign-in">
+                            <Button variant={'ghost'}>Sign-in</Button>
+                        </Link>
+                    ) : (
+                        <UserButton />
+                    )}
                 </div>
             </div>
         </ContainerLayout>
