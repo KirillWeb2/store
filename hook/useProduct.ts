@@ -19,6 +19,7 @@ export const useProduct = ({ product }: UseProductProps) => {
 
     const handleSetItemInCart = useCallback(async () => {
         try {
+            console.log(cart)
             if (cart) {
                 await addItemInCart({ quantity: 1, productId: product._id, cartId: cart._id });
                 sendToastify({ text: 'The product has been added to the cart!' });
