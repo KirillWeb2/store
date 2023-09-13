@@ -3,7 +3,7 @@ import { NextResponse, NextRequest } from 'next/server';
 import { connect } from '@/utils/db';
 import { ProductModel } from '@/models';
 
-export const GET = async () => {
+export const POST = async () => {
     try {
         await connect();
 

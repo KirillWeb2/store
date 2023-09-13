@@ -5,7 +5,7 @@ import { GetAllProductResponse, GetOneProductBody, GetOneProductResponse } from 
 
 export const productService = {
     getAll: async () => {
-        return request.get<void, AxiosResponse<GetAllProductResponse>>('/data/get-all').then((res) => res.data);
+        return request.post<void, AxiosResponse<GetAllProductResponse>>('/data/get-all').then((res) => res.data);
     },
     getOne: async (params: GetOneProductBody) => {
         return request
