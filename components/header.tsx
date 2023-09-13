@@ -7,11 +7,13 @@ import { Bird, Home, ShoppingCart, Heart, BookOpenCheck, Lock } from 'lucide-rea
 import { ContainerLayout } from './layout';
 import { ModeToggle } from './mode-toggle';
 import { Button } from './ui/button';
+import { usePathname } from 'next/navigation';
 
 export const Header = () => {
-    const { isLoaded, isSignedIn, session } = useSession();
-
-    return (
+    const path = usePathname()
+    const { isLoaded, session } = useSession();
+    console.log(path)
+    return (    
         <ContainerLayout>
             <div className="flex items-center justify-between py-2 ">
                 <Link className="flex items-center gap-3" href={'/'}>
@@ -20,28 +22,28 @@ export const Header = () => {
                 <ul className="flex items-center gap-6">
                     <li>
                         <Link href={'/cart'}>
-                            <Button className="flex items-center gap-2" variant={'ghost'}>
+                            <Button className="flex items-center gap-2" variant={path === "/cart" ? "secondary" : 'ghost'}>
                                 Cart <ShoppingCart width={16} height={16} />{' '}
                             </Button>
                         </Link>
                     </li>
                     <li>
                         <Link href={'/liked'}>
-                            <Button className="flex items-center gap-2" variant={'ghost'}>
+                            <Button className="flex items-center gap-2" variant={path === "/liked" ? "secondary" : 'ghost'}>
                                 Like <Heart width={16} height={16} />
                             </Button>
                         </Link>
                     </li>
                     <li>
                         <Link href={'/orders'}>
-                            <Button className="flex items-center gap-2" variant={'ghost'}>
+                            <Button className="flex items-center gap-2" variant={path === "/orders" ? "secondary" : 'ghost'}>
                                 Orders <BookOpenCheck width={16} height={16} />
                             </Button>
                         </Link>
                     </li>
                     <li>
                         <Link href={'/admin'}>
-                            <Button className="flex items-center gap-2" variant={'ghost'}>
+                            <Button className="flex items-center gap-2" variant={path === "/admin" ? "secondary" : 'ghost'}>
                                 Admin <Lock width={16} height={16} />
                             </Button>
                         </Link>
